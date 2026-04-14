@@ -14,7 +14,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
+                height: 100dvh;
                 margin: 0;
             }
             .cat{
@@ -31,7 +31,6 @@
                 height: 100vh;
                 margin: 0;
                 font-size: 10vh;
-                color: maroon;
             }
 
             @keyframes moveH {
@@ -44,13 +43,21 @@
                 50%{bottom: calc(100vh - 100px);}
                 100%{bottom: calc(0px - 60px);}
             }
+            @keyframes fall {
+                from{
+                    top:150vh;
+                }
+                to{
+                    top:50vh;
+                }
+            }
         </style>
 
     </head>
 
     <body>
 
-        <div class="cat">
+        <div class="cat" id="cat">
             <img src="maxwell.gif" alt="It is he" id="max" onclick=boom() style="cursor:crosshair">
         </div>
 
@@ -81,7 +88,7 @@
             }
 
             function boom(){
-                let anims = document.getAnimations()
+                let anims = document.getElementById("cat").getAnimations()
                 backgroundText.classList.add('backgroundText')
                 var audio = new Audio('explosion.mp3')
                 maxwell.src = 'explosion.gif'
@@ -89,16 +96,29 @@
                 anims.forEach(anim => anim.pause())
                 audio.play()
                 setTimeout(() =>{maxwell.hidden = 'true'},800)
-                setTimeout(() => {backgroundText.innerHTML = '<h1>MURDERER</h1>'},1000)
-                setTimeout(() => {document.body.prepend(backgroundText)},1000)
-                setTimeout(() => {document.body.style.backgroundColor = 'black'},1000)
-                setTimeout(() => {backgroundText.innerHTML = ''}, 6000)
-                setTimeout(() => {i=0;type("JK, he's fine");}, 6000)
-                setTimeout(() => {document.body.style.backgroundColor = 'lightgreen'}, 6000)
-                setTimeout(() => {document.backgroundText.style.color = 'blue'}, 6000)
-                setTimeout(() => {maxwell.removeAttribute('hidden');maxwell.onclick = boom}, 6000)
-                setTimeout(() => {anims.forEach(anim => anim.play())}, 6000)
-                setTimeout(() => {maxwell.src = 'maxwell.gif'}, 6000)
+                setTimeout(() => {
+                    
+                    backgroundText.style.fontFamily="'Comic sans";
+                    backgroundText.innerHTML = '<h1>MURDERER</h1>';
+                    backgroundText.style.color = 'maroon';
+                    document.body.prepend(backgroundText);
+                    document.body.style.backgroundColor = 'black';
+                },1000)
+
+                setTimeout(() => {
+                    i=0;
+                    backgroundText.innerHTML = '';
+                    type("Just kidding, he's fine");
+                    backgroundText.style.fontFamily="'Times New Roman', Times, serif";
+                    backgroundText.style.color = 'blue';
+                    document.body.style.backgroundColor = 'lightgreen';
+                    maxwell.removeAttribute('hidden');
+                    maxwell.onclick = boom;
+                    anims.forEach(anim => anim.play());
+                    maxwell.src = 'maxwell.gif';
+                    },
+                6000)
+
                 setTimeout(() => {clear()},11000)
             }
         </script>
