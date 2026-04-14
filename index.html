@@ -54,25 +54,30 @@
             <img src="maxwell.gif" alt="It is he" id="max" onclick=boom() style="cursor:crosshair">
         </div>
 
-        <div>
-            <input type="range" min="2" max="500" value="100" id="slider">
-        </div>
-
         <script>
             const backgroundText = document.createElement('header')
-            var slider = document.getElementById('slider')
             var maxwell = document.getElementById('max')
             var i=0
-            slider.oninput = function (){maxwell.style.scale = slider.value + '%'}
 
             function type(text){
-            
-                while(i < text.length){
-                    setInterval(() => {
-                        backgroundText.innerHTML += text.charAt(i);
-                        i++;
-                    },250)
-                }
+                typeInt = setInterval(() => {
+                    if(i < text.length){
+                    backgroundText.innerHTML += text.charAt(i);
+                    i++;
+                    }
+                    else{clearInterval(typeInt)}
+                },100)
+                
+            }
+
+            function clear(){
+                clearInt = setInterval(() => {
+                    if(i > 0){
+                        backgroundText.innerHTML = backgroundText.innerHTML.slice(0,-1)
+                        i--;
+                    }
+                    else{clearInterval(clearInt)}
+                },150)
             }
 
             function boom(){
@@ -80,19 +85,21 @@
                 backgroundText.classList.add('backgroundText')
                 var audio = new Audio('explosion.mp3')
                 maxwell.src = 'explosion.gif'
+                maxwell.onclick = null
                 anims.forEach(anim => anim.pause())
                 audio.play()
                 setTimeout(() =>{maxwell.hidden = 'true'},800)
                 setTimeout(() => {backgroundText.innerHTML = '<h1>MURDERER</h1>'},1000)
                 setTimeout(() => {document.body.prepend(backgroundText)},1000)
                 setTimeout(() => {document.body.style.backgroundColor = 'black'},1000)
-                setTimeout(() => {backgroundText.innerHTML = ''}, 15000)
-                setTimeout(() => {i=0;type("JK, he's fine");}, 15000)
-                setTimeout(() => {document.body.style.backgroundColor = 'lightgreen'}, 15000)
-                setTimeout(() => {document.backgroundText.style.color = 'blue'}, 15000)
-                setTimeout(() => {maxwell.removeAttribute('hidden')}, 15000)
-                setTimeout(() => {anims.forEach(anim => anim.play())}, 15000)
-                setTimeout(() => {maxwell.src = 'maxwell.gif'}, 15000)
+                setTimeout(() => {backgroundText.innerHTML = ''}, 6000)
+                setTimeout(() => {i=0;type("JK, he's fine");}, 6000)
+                setTimeout(() => {document.body.style.backgroundColor = 'lightgreen'}, 6000)
+                setTimeout(() => {document.backgroundText.style.color = 'blue'}, 6000)
+                setTimeout(() => {maxwell.removeAttribute('hidden');maxwell.onclick = boom}, 6000)
+                setTimeout(() => {anims.forEach(anim => anim.play())}, 6000)
+                setTimeout(() => {maxwell.src = 'maxwell.gif'}, 6000)
+                setTimeout(() => {clear()},11000)
             }
         </script>
     </body>
