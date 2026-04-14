@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>I think</title>
+        <link rel="icon" type="image/x-icon" href="renicon.jpeg">
+
+        <style>
+            body {
+                font-family: 'Comic sans';
+                background-color:lightgreen;
+                margin: 0;
+            }
+            .center{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .cat{
+                transform-origin: center;
+                position:absolute;
+                animation: moveH 6s linear infinite, moveV 8s linear infinite;
+                transform:scale(0.5)
+            }
+
+            .backgroundText{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                font-size: 10vh;
+                color: maroon;
+            }
+
+            @keyframes moveH {
+                0%{left: calc(-80px);}
+                50%{left: calc(100vw - 125px);}
+                100%{left: calc(-80px);}
+            }
+            @keyframes moveV {
+                0%{bottom: calc(0px - 60px);}
+                50%{bottom: calc(100vh - 100px);}
+                100%{bottom: calc(0px - 60px);}
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="cat">
+            <img src="maxwell.gif" alt="It is he" id="max" onclick=boom() style="cursor:crosshair">
+        </div>
+
+        <div>
+            <input type="range" min="2" max="500" value="100" id="slider">
+        </div>
+
+        <script>
+            const backgroundText = document.createElement('header')
+            var slider = document.getElementById('slider')
+            var maxwell = document.getElementById('max')
+            var i=0
+            slider.oninput = function (){maxwell.style.scale = slider.value + '%'}
+
+            function type(text){
+                if (i < text.length) {
+                    backgroundText.innerHTML += text.charAt(i);
+                    i++;
+                    document.prepend(backgroundText)
+                    setTimeout(() => {type(text)},250);
+                }
+            }
+
+            function boom(){
+                let anims = document.getAnimations()
+                backgroundText.classList.add('backgroundText')
+                var audio = new Audio('explosion.mp3')
+                maxwell.src = 'explosion.gif'
+                anims.forEach(anim => anim.pause())
+                audio.play()
+                setTimeout(() =>{maxwell.hidden = 'true'},800)
+                setTimeout(() => {backgroundText.innerHTML = '<h1>MURDERER</h1>'},1000)
+                setTimeout(() => {document.body.prepend(backgroundText)},1000)
+                setTimeout(() => {document.body.style.backgroundColor = 'black'},1000)
+                setTimeout(() => {backgroundText.innerHTML = ''}, 15000)
+                setTimeout(() => {i=0;type("JK, he's fine");}, 15000)
+                setTimeout(() => {document.body.style.backgroundColor = 'lightgreen'}, 15000)
+                setTimeout(() => {document.backgroundText.style.color = 'blue'}, 15000)
+                setTimeout(() => {maxwell.removeAttribute('hidden')}, 15000)
+                setTimeout(() => {anims.forEach(anim => anim.play())}, 15000)
+                setTimeout(() => {maxwell.src = 'maxwell.gif'}, 15000)
+            }
+        </script>
+    </body>
+</html>
