@@ -66,11 +66,12 @@
             slider.oninput = function (){maxwell.style.scale = slider.value + '%'}
 
             function type(text){
-                if (i < text.length) {
-                    backgroundText.innerHTML += text.charAt(i);
-                    i++;
-                    document.prepend(backgroundText)
-                    setTimeout(() => {type(text)},250);
+            
+                while(i < text.length){
+                    setInterval(() => {
+                        backgroundText.innerHTML += text.charAt(i);
+                        i++;
+                    },250)
                 }
             }
 
