@@ -20,7 +20,7 @@
             .cat{
                 transform-origin: center;
                 position:absolute;
-                animation: moveH 6s linear infinite, moveV 8s linear infinite;
+                animation: moveH 7s linear infinite, moveV 6012ms linear infinite;
                 transform:scale(0.5)
             }
 
@@ -66,16 +66,22 @@
             const thinkButton = document.createElement("button")
             var maxwell = document.getElementById('max')
             var i=0
+            var deathCount = 0
 
-            function type(text){
+            function type(text, doClear){
                 typeInt = setInterval(() => {
                     if(i < text.length){
-                    backgroundText.innerHTML += text.charAt(i);
-                    i++;
+                        backgroundText.innerHTML += text.charAt(i);
+                        i++;
                     }
-                    else{clearInterval(typeInt)}
+                    else{
+                        if(doClear == true){
+                            setTimeout(() => {clear()},2000)
+                        }
+                        clearInterval(typeInt)
+                    }
                 },100)
-                
+            
             }
 
             function clear(){
@@ -92,6 +98,7 @@
                 let anims = document.getElementById("cat").getAnimations()
                 backgroundText.classList.add('backgroundText')
                 var audio = new Audio('explosion.mp3')
+                deathCount ++
                 maxwell.src = 'explosion.gif'
                 maxwell.onclick = null
                 anims.forEach(anim => anim.pause())
@@ -108,18 +115,35 @@
                 setTimeout(() => {
                     i=0;
                     backgroundText.innerHTML = '';
-                    type("Just kidding, he's fine");
-                    backgroundText.style.fontFamily="'Times New Roman', Times, serif";
-                    backgroundText.style.color = 'blue';
-                    document.body.style.backgroundColor = 'lightgreen';
-                    maxwell.removeAttribute('hidden');
-                    maxwell.onclick = boom;
-                    anims.forEach(anim => anim.play());
-                    maxwell.src = 'maxwell.gif';
-                    },
+                    if(deathCount < 4){
+                        type("Just kidding, he's fine", true);
+                        backgroundText.style.fontFamily="'Times New Roman', Times, serif";
+                        backgroundText.style.color = 'blue';
+                        document.body.style.backgroundColor = 'lightgreen';
+                        maxwell.removeAttribute('hidden');
+                        maxwell.onclick = boom;
+                        anims.forEach(anim => anim.play());
+                        maxwell.src = 'maxwell.gif';
+                    }
+                    else if(deathCount < 10){
+                        type("You should really stop doing that", true);
+                        backgroundText.style.fontFamily="'Times New Roman', Times, serif";
+                        backgroundText.style.color = 'black';
+                        document.body.style.backgroundColor = 'lightgreen';
+                        maxwell.removeAttribute('hidden');
+                        maxwell.onclick = boom;
+                        anims.forEach(anim => anim.play());
+                        maxwell.src = 'maxwell.gif';
+                    }
+                    else{
+                        type("You killed him. This will haunt you forever", false);
+                        backgroundText.style.fontFamily="'Times New Roman', Times, serif";
+                        anims.forEach(anim => anim.play());
+                        backgroundText.style.color = 'maroon';
+                        document.body.style.backgroundColor = 'lightgreen'
+                    }
+                },
                 6000)
-
-                setTimeout(() => {clear()},11000)
             }
         </script>
     </body>
