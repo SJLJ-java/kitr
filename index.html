@@ -63,6 +63,7 @@
 
         <script>
             const backgroundText = document.createElement('header')
+            const thinkButton = document.createElement("button")
             var maxwell = document.getElementById('max')
             var i=0
 
@@ -97,7 +98,6 @@
                 audio.play()
                 setTimeout(() =>{maxwell.hidden = 'true'},800)
                 setTimeout(() => {
-                    
                     backgroundText.style.fontFamily="'Comic sans";
                     backgroundText.innerHTML = '<h1>MURDERER</h1>';
                     backgroundText.style.color = 'maroon';
