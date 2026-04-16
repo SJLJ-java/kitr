@@ -33,6 +33,13 @@
                 font-size: 10vh;
             }
 
+            .cornerText{
+                bottom:1vh;
+                left:1vw;
+                position:absolute;
+                margin:0;
+            }
+
             @keyframes moveH {
                 0%{left: calc(-80px);}
                 50%{left: calc(100vw - 125px);}
@@ -60,10 +67,12 @@
         <div class="cat" id="cat">
             <img src="maxwell.gif" alt="It is he" id="max" onclick=boom() style="cursor:crosshair">
         </div>
+        <p class="cornerText" id="cornerText"></p>>
 
         <script>
             const backgroundText = document.createElement('header')
             const thinkButton = document.createElement("button")
+            const cornerText = document.getElementById('cornerText')
             var maxwell = document.getElementById('max')
             var i=0
             var deathCount = 0
@@ -95,6 +104,8 @@
             }
 
             function boom(){
+                
+                cornerText.textContent += "|"
                 let anims = document.getElementById("cat").getAnimations()
                 backgroundText.classList.add('backgroundText')
                 var audio = new Audio('explosion.mp3')
@@ -125,7 +136,7 @@
                         anims.forEach(anim => anim.play());
                         maxwell.src = 'maxwell.gif';
                     }
-                    else if(deathCount < 10){
+                    else if(deathCount < 9){
                         type("You should really stop doing that", true);
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
                         backgroundText.style.color = 'black';
