@@ -20,7 +20,7 @@
             .cat{
                 transform-origin: center;
                 position:absolute;
-                animation: moveH 7s linear infinite, moveV 6012ms linear infinite;
+                animation: moveH 7001ms linear infinite, moveV 6012ms linear infinite;
                 transform:scale(0.5)
             }
 
@@ -77,7 +77,7 @@
             var i=0
             var deathCount = 0
 
-            function type(text, doClear){
+            function type(text, doClear, speed){
                 typeInt = setInterval(() => {
                     if(i < text.length){
                         backgroundText.innerHTML += text.charAt(i);
@@ -89,8 +89,7 @@
                         }
                         clearInterval(typeInt)
                     }
-                },100)
-            
+                },speed)
             }
 
             function clear(){
@@ -127,7 +126,7 @@
                     i=0;
                     backgroundText.innerHTML = '';
                     if(deathCount < 4){
-                        type("Just kidding, he's fine", true);
+                        type("Just kidding, he's fine", true, 100);
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
                         backgroundText.style.color = 'blue';
                         document.body.style.backgroundColor = 'lightgreen';
@@ -136,8 +135,18 @@
                         anims.forEach(anim => anim.play());
                         maxwell.src = 'maxwell.gif';
                     }
+                    else if(deathCount < 5){
+                        type("You should really stop doing that", true, 100);
+                        backgroundText.style.fontFamily="'Times New Roman', Times, serif";
+                        backgroundText.style.color = 'black';
+                        document.body.style.backgroundColor = 'lightgreen';
+                        maxwell.removeAttribute('hidden');
+                        maxwell.onclick = boom;
+                        anims.forEach(anim => anim.play());
+                        maxwell.src = 'maxwell.gif';
+                    }
                     else if(deathCount < 9){
-                        type("You should really stop doing that", true);
+                        type("STOP", true, 1000)
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
                         backgroundText.style.color = 'black';
                         document.body.style.backgroundColor = 'lightgreen';
