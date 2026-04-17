@@ -67,19 +67,21 @@
         <div class="cat" id="cat">
             <img src="maxwell.gif" alt="It is he" id="max" onclick=boom() style="cursor:crosshair">
         </div>
-        <p class="cornerText" id="cornerText"></p>>
+        <p class="cornerText" id="cornerText"></p>
 
         <script>
             const backgroundText = document.createElement('header')
             const thinkButton = document.createElement("button")
             const cornerText = document.getElementById('cornerText')
             var maxwell = document.getElementById('max')
+            var TypeStop = false
             var i=0
             var deathCount = 0
 
             function type(text, doClear, speed){
+                typeStop = false
                 typeInt = setInterval(() => {
-                    if(i < text.length){
+                    if(i < text.length && typeStop != true){
                         backgroundText.innerHTML += text.charAt(i);
                         i++;
                     }
@@ -103,7 +105,7 @@
             }
 
             function boom(){
-                
+                typeStop = true
                 cornerText.textContent += "|"
                 let anims = document.getElementById("cat").getAnimations()
                 backgroundText.classList.add('backgroundText')
@@ -125,7 +127,7 @@
                 setTimeout(() => {
                     i=0;
                     backgroundText.innerHTML = '';
-                    if(deathCount < 4){
+                    if(deathCount < 3){
                         type("Just kidding, he's fine", true, 100);
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
                         backgroundText.style.color = 'blue';
@@ -135,10 +137,10 @@
                         anims.forEach(anim => anim.play());
                         maxwell.src = 'maxwell.gif';
                     }
-                    else if(deathCount < 5){
+                    else if(deathCount < 6){
                         type("You should really stop doing that", true, 100);
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
-                        backgroundText.style.color = 'black';
+                        backgroundText.style.color = 'darkgrey';
                         document.body.style.backgroundColor = 'lightgreen';
                         maxwell.removeAttribute('hidden');
                         maxwell.onclick = boom;
@@ -147,7 +149,7 @@
                     }
                     else if(deathCount < 9){
                         type("STOP", true, 1000)
-                        backgroundText.style.fontFamily="'Times New Roman', Times, serif";
+                        backgroundText.style.fontFamily="Times New Roman', Times, serif";
                         backgroundText.style.color = 'black';
                         document.body.style.backgroundColor = 'lightgreen';
                         maxwell.removeAttribute('hidden');
@@ -156,7 +158,7 @@
                         maxwell.src = 'maxwell.gif';
                     }
                     else{
-                        type("You killed him. This will haunt you forever", false);
+                        type("You killed him. This will haunt you forever", false, 300);
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
                         anims.forEach(anim => anim.play());
                         backgroundText.style.color = 'maroon';
