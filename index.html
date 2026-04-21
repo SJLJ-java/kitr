@@ -20,7 +20,7 @@
             .cat{
                 transform-origin: center;
                 position:absolute;
-                animation: moveH 7001ms linear infinite, moveV 6012ms linear infinite;
+                animation: moveH 7001ms linear infinite, moveV 6128ms linear infinite;
                 transform:scale(0.5)
             }
 
@@ -31,6 +31,19 @@
                 height: 100vh;
                 margin: 0;
                 font-size: 10vh;
+            }
+
+            .timerText{
+                display: flex;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 0;
+                left: 50%;
+                align-items: center;
+                text-align: center;
+                font-family: "Comic Sans MS", "Comic Sans", cursive;
+                color:black;
+                opacity: 0;
             }
 
             .cornerText{
@@ -67,6 +80,7 @@
         <div class="cat" id="cat">
             <img src="maxwell.gif" alt="It is he" id="max" onclick=boom() style="cursor:crosshair">
         </div>
+        <p class="timerText" id="timerText"></p>
         <p class="cornerText" id="cornerText"></p>
 
         <script>
@@ -77,6 +91,41 @@
             var TypeStop = false
             var i=0
             var deathCount = 0
+            var ms=0;var sec=0;var min=0;var hour=0;
+
+            setInterval(() => {
+                ms+=25;
+                if(ms == 1000){
+                    sec ++
+                    ms = 0
+                }
+                if(sec == 60){
+                    min ++
+                    sec = 0
+                }
+                if(min == 60){
+                    hour ++
+                    sec = 0
+                }
+                timerText.textContent = 
+                    hour.toString().padStart(2,"0")+":"
+                    +min.toString().padStart(2,"0")+":"
+                    +sec.toString().padStart(2,"0")+":"
+                    +ms.toString().padStart(3,"0")
+            }, 25);
+
+            document.addEventListener('keydown', (event) => {
+                const timerText = document.getElementById('timerText')
+                if(event.key === 't'){
+                    timerText.style.opacity = '100'
+                }
+            })
+            document.addEventListener('keyup', (event) => {
+                const timerText = document.getElementById('timerText')
+                if(event.key === 't'){
+                    timerText.style.opacity = '0'
+                }
+            })
 
             function type(text, doClear, speed){
                 typeStop = false
@@ -140,7 +189,7 @@
                     else if(deathCount < 6){
                         type("You should really stop doing that", true, 100);
                         backgroundText.style.fontFamily="'Times New Roman', Times, serif";
-                        backgroundText.style.color = 'darkgrey';
+                        backgroundText.style.color = 'black';
                         document.body.style.backgroundColor = 'lightgreen';
                         maxwell.removeAttribute('hidden');
                         maxwell.onclick = boom;
@@ -150,7 +199,7 @@
                     else if(deathCount < 9){
                         type("STOP", true, 1000)
                         backgroundText.style.fontFamily="Times New Roman', Times, serif";
-                        backgroundText.style.color = 'black';
+                        backgroundText.style.color = 'red';
                         document.body.style.backgroundColor = 'lightgreen';
                         maxwell.removeAttribute('hidden');
                         maxwell.onclick = boom;
